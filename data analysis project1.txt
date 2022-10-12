@@ -1,0 +1,106 @@
+
+
+Scope of Project :
+
+Analyse and Visualize Hotel Booking Data.
+
+QUESTIONS
+
+1) Is hotel revenue growing by year?
+There is an increase of revenue by each year from 2018 to 2020
+As shown in the dashboard in power-bi
+
+2) Is necessary to increase Parking spaces?
+ 
+As seeing from the data per client the demand for parking spaces is very low.
+Creating new parking spaces will be an excess expenditure from the budget of the hotel.
+there are 1352 parking spaces which where optimised within the period of 2018
+and 2237 in 2020.
+
+
+
+3)What trends can we see in the data?
+
+The trends that we can see from 2018 begginning revenue is low till beggining of june where it goes uphill , the hotel is seasonal works better in summer.
+in 2019 we see a slight increase but corellating with 2018 it is a bad year for the hotel profits wise.
+ January 2020 we see an increase in revenue till the end of summer is the highest revenue year.
+
+
+
+
+
+
+SQL STEPS:
+
+First by checking the data with the selected command:
+
+ select * from dbo.[‘2018$’]
+
+union
+
+select * from dbo.[‘2019$’]
+
+union
+
+select * from dbo.[‘2020$’]
+
+With UNION will combine the multiple statements together.
+
+
+
+Since in the database there is no revenue column will create one 
+By : adding two columns: stays_in_week_nights+stays_in_weekend_nights From hotels.
+ After will multiple them by the ADR = daily rate.
+
+
+“ Select
+Arrival_date_year,
+Sum(stays_in_week_nights+stays_in_weekend_nights)*adr as revenue
+From hotels
+Group by arrival_date_year
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select 
+arrival_date_year,
+hotel,
+round (sum((stays_in_week_nights+stays_in_weekend_nights)*adr),2) as revenue 
+from hotels
+group by arrival_date_year,hotel
+
+--------------------------------------------------
+
+with hotels as (
+select * from dbo.['2018$']
+union
+select * from dbo.['2019$']
+union
+select * from dbo.['2020$'])
+
+select * from hotels
+left join dbo.market_segment$
+on hotels.market_segment = market_segment$.market_segment
+left join 
+dbo.meal_cost$ 
+on meal_cost$.meal =hotels.meal
+
+-----------------------------------------------------------------
+
+
+
